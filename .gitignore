@@ -1,0 +1,29 @@
+# Dependency directories
+node_modules/
+__pycache__/
+env/
+venv/
+.venv/
+.env
+
+# Build outputs
+/dist/
+/build/
+/frontend/dist/
+
+# Credentials / Secrets
+gcp-creds.json
+*.pem
+*.key
+credentials.json
+client_secret.json
+
+# Temporary files
+*.log
+.DS_Store
+Thumbs.db
+coverage/
+
+# IDE / Editor
+.vscode/
+.idea/

@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Mission Control Hub - Cricket Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-highest": "#383244",
+                        "on-tertiary-fixed": "#40000e",
+                        "on-primary-fixed": "#201926",
+                        "surface-container-high": "#2d2739",
+                        "outline": "#958f95",
+                        "secondary-fixed": "#53ffac",
+                        "on-tertiary-container": "#ee034c",
+                        "secondary": "#44f6a3",
+                        "on-error-container": "#ffdad6",
+                        "surface-variant": "#383244",
+                        "error": "#ffb4ab",
+                        "secondary-fixed-dim": "#20e291",
+                        "error-container": "#93000a",
+                        "tertiary": "#ffb2b7",
+                        "surface-container-lowest": "#110b1c",
+                        "surface-container": "#231d2e",
+                        "on-primary-container": "#7e7585",
+                        "background": "#161021",
+                        "on-secondary": "#003920",
+                        "on-surface": "#e9def6",
+                        "on-tertiary-fixed-variant": "#91002b",
+                        "tertiary-fixed-dim": "#ffb2b7",
+                        "surface-container-low": "#1f192a",
+                        "secondary-container": "#00d98a",
+                        "surface-bright": "#3d3649",
+                        "on-primary-fixed-variant": "#4c4452",
+                        "on-secondary-container": "#005935",
+                        "primary-fixed-dim": "#cec2d4",
+                        "on-surface-variant": "#cbc4cb",
+                        "inverse-surface": "#e9def6",
+                        "on-error": "#690005",
+                        "inverse-primary": "#645b6a",
+                        "on-background": "#e9def6",
+                        "tertiary-container": "#190003",
+                        "inverse-on-surface": "#342d40",
+                        "primary-fixed": "#ebdef1",
+                        "surface-tint": "#cec2d4",
+                        "primary-container": "#0a0510",
+                        "on-tertiary": "#67001c",
+                        "surface-dim": "#161021",
+                        "surface": "#161021",
+                        "on-secondary-fixed-variant": "#005231",
+                        "outline-variant": "#49454b",
+                        "on-secondary-fixed": "#002111",
+                        "on-primary": "#352d3b",
+                        "primary": "#cec2d4",
+                        "tertiary-fixed": "#ffdadb"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "base": "4px",
+                        "margin": "24px",
+                        "gutter": "16px",
+                        "sm": "8px",
+                        "xl": "40px",
+                        "md": "16px",
+                        "xs": "4px",
+                        "lg": "24px"
+                    },
+                    "fontFamily": {
+                        "body-base": [
+                            "Space Grotesk",
+                            "sans-serif"
+                        ],
+                        "label-xs": [
+                            "monospace"
+                        ],
+                        "headline-md": [
+                            "Space Grotesk",
+                            "sans-serif"
+                        ],
+                        "display-lg": [
+                            "Space Grotesk",
+                            "sans-serif"
+                        ],
+                        "data-mono-lg": [
+                            "monospace"
+                        ]
+                    },
+                    "fontSize": {
+                        "body-base": [
+                            "16px",
+                            {
+                                "lineHeight": "1.5",
+                                "letterSpacing": "0.01em",
+                                "fontWeight": "400"
+                            }
+                        ],
+                        "label-xs": [
+                            "11px",
+                            {
+                                "lineHeight": "1",
+                                "letterSpacing": "0.1em",
+                                "fontWeight": "700"
+                            }
+                        ],
+                        "headline-md": [
+                            "24px",
+                            {
+                                "lineHeight": "1.2",
+                                "letterSpacing": "0.02em",
+                                "fontWeight": "600"
+                            }
+                        ],
+                        "display-lg": [
+                            "48px",
+                            {
+                                "lineHeight": "1.1",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "700"
+                            }
+                        ],
+                        "data-mono-lg": [
+                            "20px",
+                            {
+                                "lineHeight": "1.4",
+                                "letterSpacing": "0.05em",
+                                "fontWeight": "500"
+                            }
+                        ]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .symbol-filled {
+            font-variation-settings: 'FILL' 1;
+        }
+        
+        /* Custom HUD Glow Effects */
+        .hud-glow-emerald {
+            box-shadow: 0 0 15px rgba(68, 246, 163, 0.2), inset 0 0 8px rgba(68, 246, 163, 0.1);
+        }
+        .hud-glow-crimson {
+            box-shadow: 0 0 15px rgba(255, 180, 171, 0.2), inset 0 0 8px rgba(255, 180, 171, 0.1);
+        }
+        
+        /* Pulse Animation */
+        @keyframes pulse-opacity {
+            0% { opacity: 1; }
+            50% { opacity: 0.4; }
+            100% { opacity: 1; }
+        }
+        .pulse-live {
+            animation: pulse-opacity 2s infinite;
+        }
+
+        /* Glass HUD Panel */
+        .glass-panel {
+            background-color: rgba(45, 39, 57, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid #49454b;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-base overflow-hidden selection:bg-secondary selection:text-on-secondary">
+<!-- TopNavBar (Shared Component) -->
+<nav class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-6 py-2 bg-[#0A0510]/90 backdrop-blur-xl border-b border-[#1A1425] shadow-[0_4px_20px_rgba(0,0,0,0.5)]">
+<div class="flex items-center gap-md">
+<span class="text-xl font-black text-emerald-400 tracking-widest drop-shadow-[0_0_8px_rgba(16,185,129,0.6)] font-['Space_Grotesk'] uppercase">MISSION_CONTROL</span>
+</div>
+<div class="flex items-center gap-gutter">
+<!-- Search -->
+<div class="relative hidden md:block">
+<span class="material-symbols-outlined absolute left-2 top-1/2 -translate-y-1/2 text-on-primary-container text-sm">search</span>
+<input class="bg-surface-container-high border outline-variant text-on-surface rounded-DEFAULT py-1 pl-8 pr-3 text-label-xs font-label-xs focus:border-secondary focus:ring-1 focus:ring-secondary transition-colors w-64 placeholder:text-on-primary-container" placeholder="QUERY_DATABASE" type="text"/>
+</div>
+<div class="flex items-center gap-sm">
+<button class="p-2 text-error hover:bg-error/10 rounded-DEFAULT transition-colors relative" title="Alerts">
+<span class="material-symbols-outlined">notifications_active</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full animate-pulse"></span>
+</button>
+<button class="p-2 text-slate-500 hover:text-emerald-300 hover:bg-emerald-500/5 transition-colors rounded-DEFAULT" title="Profile">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+<button class="p-2 text-slate-500 hover:text-emerald-300 hover:bg-emerald-500/5 transition-colors rounded-DEFAULT" title="Settings">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+</div>
+</nav>
+<!-- SideNavBar (Shared Component) -->
+<aside class="hidden lg:flex flex-col h-screen fixed left-0 top-0 pt-16 z-40 w-64 border-r border-[#1A1425] bg-[#0A0510]">
+<div class="p-margin border-b border-[#1A1425]">
+<div class="flex items-center gap-sm mb-xs">
+<span class="w-2 h-2 bg-secondary rounded-full pulse-live"></span>
+<span class="font-label-xs text-label-xs text-secondary tracking-widest">SYSTEM_ACTIVE</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-on-surface tracking-wider">SECTOR_01</h2>
+</div>
+<nav class="flex-1 py-margin overflow-y-auto">
+<ul class="flex flex-col gap-xs">
+<li>
+<a class="flex items-center gap-md px-margin py-3 text-emerald-400 bg-emerald-500/10 border-l-4 border-emerald-500 shadow-[inset_0_0_15px_rgba(16,185,129,0.1)] transition-all duration-300 ease-out font-['Space_Grotesk'] text-xs font-bold tracking-widest uppercase" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+                        Strategic_Overview
+                    </a>
+</li>
+<li>
+<a class="flex items-center gap-md px-margin py-3 text-slate-600 hover:text-slate-300 hover:bg-[#1A1425] transition-all duration-300 ease-out font-['Space_Grotesk'] text-xs font-bold tracking-widest uppercase group" href="#">
+<span class="material-symbols-outlined group-hover:text-emerald-400 transition-colors">sensors</span>
+                        Live_Telemetry
+                    </a>
+</li>
+<li>
+<a class="flex items-center gap-md px-margin py-3 text-slate-600 hover:text-slate-300 hover:bg-[#1A1425] transition-all duration-300 ease-out font-['Space_Grotesk'] text-xs font-bold tracking-widest uppercase group" href="#">
+<span class="material-symbols-outlined group-hover:text-emerald-400 transition-colors">groups</span>
+                        Squad_Intelligence
+                    </a>
+</li>
+<li>
+<a class="flex items-center gap-md px-margin py-3 text-slate-600 hover:text-slate-300 hover:bg-[#1A1425] transition-all duration-300 ease-out font-['Space_Grotesk'] text-xs font-bold tracking-widest uppercase group" href="#">
+<span class="material-symbols-outlined group-hover:text-emerald-400 transition-colors">query_stats</span>
+                        Tactical_Analysis
+                    </a>
+</li>
+<li>
+<a class="flex items-center gap-md px-margin py-3 text-slate-600 hover:text-slate-300 hover:bg-[#1A1425] transition-all duration-300 ease-out font-['Space_Grotesk'] text-xs font-bold tracking-widest uppercase group" href="#">
+<span class="material-symbols-outlined group-hover:text-emerald-400 transition-colors">history</span>
+                        Mission_Logs
+                    </a>
+</li>
+</ul>
+</nav>
+</aside>
+<!-- Main Content Canvas -->
+<main class="lg:ml-64 pt-16 h-screen overflow-y-auto bg-surface-lowest p-margin">
+<div class="grid grid-cols-12 gap-gutter max-w-[1600px] mx-auto">
+<!-- Header/Status Bar -->
+<div class="col-span-12 flex justify-between items-end mb-sm border-b border-surface-container pb-xs">
+<div>
+<h1 class="font-display-lg text-display-lg text-on-surface">STRATEGIC_OVERVIEW</h1>
+<p class="font-label-xs text-label-xs text-on-surface-variant uppercase tracking-widest mt-1">Match Sector: Alpha-9 | Innings 02</p>
+</div>
+<div class="flex gap-md">
+<div class="bg-surface-container-high border border-outline-variant px-md py-sm rounded-DEFAULT flex items-center gap-sm">
+<span class="material-symbols-outlined text-secondary">radar</span>
+<span class="font-label-xs text-label-xs text-secondary">TELEMETRY_LINK_STABLE</span>
+</div>
+</div>
+</div>
+<!-- Bento Grid Layout -->
+<!-- Scoreboard Module -->
+<div class="col-span-12 lg:col-span-4 glass-panel rounded-lg p-margin hud-glow-emerald">
+<div class="flex justify-between items-center mb-md pb-xs border-b border-surface-bright">
+<h3 class="font-label-xs text-label-xs text-on-surface-variant uppercase tracking-widest">Live_Score_Data</h3>
+<span class="material-symbols-outlined text-secondary text-sm">score</span>
+</div>
+<div class="text-center my-lg">
+<div class="font-data-mono-lg text-[64px] leading-none text-on-surface drop-shadow-[0_0_10px_rgba(68,246,163,0.3)]">
+                        184<span class="text-on-surface-variant text-[48px]">/4</span>
+</div>
+<div class="font-label-xs text-label-xs text-secondary mt-2 tracking-widest">OVERS: 16.3</div>
+</div>
+<div class="grid grid-cols-2 gap-sm mt-md pt-md border-t border-surface-bright">
+<div class="bg-surface-container p-sm rounded-DEFAULT">
+<div class="font-label-xs text-label-xs text-on-surface-variant mb-1">CRR</div>
+<div class="font-data-mono-lg text-data-mono-lg text-secondary">11.15</div>
+</div>
+<div class="bg-surface-container p-sm rounded-DEFAULT">
+<div class="font-label-xs text-label-xs text-on-surface-variant mb-1">REQ</div>
+<div class="font-data-mono-lg text-data-mono-lg text-error">12.50</div>
+</div>
+</div>
+</div>
+<!-- Relationship Network (Hero Graphic) -->
+<div class="col-span-12 lg:col-span-8 glass-panel rounded-lg p-margin relative overflow-hidden flex flex-col">
+<div class="flex justify-between items-center mb-md pb-xs border-b border-surface-bright z-10">
+<h3 class="font-label-xs text-label-xs text-on-surface-variant uppercase tracking-widest">Partnership_Network</h3>
+<div class="flex gap-2">
+<button class="bg-secondary text-on-secondary px-2 py-1 font-label-xs text-[9px] rounded-DEFAULT shadow-[0_0_8px_rgba(68,246,163,0.4)]">LIVE_NODE</button>
+<button class="border border-secondary text-secondary px-2 py-1 font-label-xs text-[9px] rounded-DEFAULT">HISTORY</button>
+</div>
+</div>
+<!-- Simulated Node Graph -->
+<div class="flex-1 relative min-h-[300px] flex items-center justify-center">
+<!-- Background Grid -->
+<div class="absolute inset-0 bg-[linear-gradient(rgba(45,39,57,0.3)_1px,transparent_1px),linear-gradient(90deg,rgba(45,39,57,0.3)_1px,transparent_1px)] bg-[size:20px_20px] opacity-20"></div>
+<!-- Nodes -->
+<div class="relative w-full max-w-md h-64">
+<!-- Batter 1 Node -->
+<div class="absolute top-1/4 left-1/4 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
+<div class="w-12 h-12 rounded-full border-2 border-secondary bg-surface-container-highest flex items-center justify-center hud-glow-emerald z-10">
+<span class="font-data-mono-lg text-sm text-secondary">P1</span>
+</div>
+<span class="font-label-xs text-label-xs mt-1">45*(22)</span>
+</div>
+<!-- Batter 2 Node -->
+<div class="absolute bottom-1/4 right-1/4 transform translate-x-1/2 translate-y-1/2 flex flex-col items-center">
+<div class="w-12 h-12 rounded-full border-2 border-outline bg-surface-container flex items-center justify-center z-10">
+<span class="font-data-mono-lg text-sm text-on-surface">P2</span>
+</div>
+<span class="font-label-xs text-label-xs mt-1">12(8)</span>
+</div>
+<!-- Bowler Node (Aggressive) -->
+<div class="absolute top-1/2 right-1/4 transform translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
+<div class="w-16 h-16 rounded-full border-2 border-error bg-[#40000e] flex items-center justify-center hud-glow-crimson z-10">
+<span class="font-data-mono-lg text-sm text-error">B1</span>
+</div>
+<span class="font-label-xs text-label-xs text-error mt-1">3.3-0-42-1</span>
+</div>
+<!-- Connections -->
+<svg class="absolute inset-0 w-full h-full pointer-events-none" style="z-index: 0;">
+<!-- Safe connection -->
+<line opacity="0.4" stroke="#44f6a3" stroke-dasharray="4" stroke-width="2" x1="25%" x2="75%" y1="25%" y2="75%"></line>
+<!-- Aggressive connection (red) -->
+<line opacity="0.8" stroke="#ffb4ab" stroke-width="3" x1="25%" x2="75%" y1="25%" y2="50%"></line>
+<!-- Neutral connection -->
+<line opacity="0.3" stroke="#958f95" stroke-width="1" x1="75%" x2="75%" y1="75%" y2="50%"></line>
+</svg>
+</div>
+</div>
+</div>
+<!-- Tactical Overlay (Fielding) -->
+<div class="col-span-12 lg:col-span-6 glass-panel rounded-lg p-margin relative border-l-2 border-error">
+<div class="flex justify-between items-center mb-md pb-xs border-b border-surface-bright">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-error text-sm">warning</span>
+<h3 class="font-label-xs text-label-xs text-error uppercase tracking-widest">Tactical_Shift_Detected</h3>
+</div>
+</div>
+<div class="flex gap-md items-center">
+<div class="w-24 h-24 rounded-full border border-surface-bright relative bg-surface-container overflow-hidden">
+<!-- Simplified Field Graphic -->
+<div class="absolute inset-2 rounded-full border border-outline-variant opacity-30"></div>
+<div class="absolute top-1/2 left-1/2 w-4 h-12 bg-[#3d3649] transform -translate-x-1/2 -translate-y-1/2"></div>
+<!-- Ghost Indicators -->
+<div class="absolute top-4 right-8 w-2 h-2 rounded-full bg-error animate-pulse shadow-[0_0_8px_#ffb4ab]"></div>
+<div class="absolute bottom-6 left-6 w-2 h-2 rounded-full bg-error animate-pulse shadow-[0_0_8px_#ffb4ab]"></div>
+<div class="absolute top-1/2 left-3 w-2 h-2 rounded-full border border-outline opacity-50"></div>
+</div>
+<div class="flex-1">
+<p class="font-body-base text-sm text-on-surface-variant mb-2">Deep mid-wicket moved square. Third man brought inside the circle.</p>
+<div class="bg-[#40000e]/30 border border-[#91002b] p-sm rounded-DEFAULT">
+<span class="font-label-xs text-label-xs text-tertiary">PROBABILITY: BOUNCER ANTICIPATED (84%)</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Win Probability Chart (Stylized) -->
+<div class="col-span-12 lg:col-span-6 glass-panel rounded-lg p-margin">
+<div class="flex justify-between items-center mb-md pb-xs border-b border-surface-bright">
+<h3 class="font-label-xs text-label-xs text-on-surface-variant uppercase tracking-widest">Match_Trajectory</h3>
+<span class="font-data-mono-lg text-sm text-secondary">BAT 62%</span>
+</div>
+<div class="h-24 flex items-end gap-1 w-full pt-4">
+<!-- Segmented Bar Chart mimicking technical readout -->
+<div class="w-full bg-surface-container-highest rounded-sm h-full relative overflow-hidden">
+<!-- Line graph simulation -->
+<svg class="absolute inset-0 w-full h-full" preserveaspectratio="none" viewbox="0 0 100 100">
+<!-- Baseline -->
+<line stroke="#49454b" stroke-dasharray="2" stroke-width="1" x1="0" x2="100" y1="50" y2="50"></line>
+<!-- Trajectory line -->
+<path d="M0,60 Q20,55 40,40 T70,30 T100,38" fill="none" stroke="#44f6a3" stroke-width="2"></path>
+<!-- Gradient fill under line -->
+<path d="M0,60 Q20,55 40,40 T70,30 T100,38 L100,100 L0,100 Z" fill="url(#grad)" opacity="0.2"></path>
+<defs>
+<lineargradient id="grad" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#44f6a3"></stop>
+<stop offset="100%" stop-color="transparent"></stop>
+</lineargradient>
+</defs>
+</svg>
+<!-- Current point indicator -->
+<div class="absolute top-[38%] right-0 w-2 h-2 bg-secondary rounded-full transform translate-x-1/2 -translate-y-1/2 hud-glow-emerald"></div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>
